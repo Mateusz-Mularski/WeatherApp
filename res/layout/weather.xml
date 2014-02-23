@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Large Text"
+            android:id="@+id/location" android:layout_alignParentTop="true" android:layout_centerHorizontal="true"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Condition: "
+            android:id="@+id/textView" android:layout_below="@+id/location" android:layout_alignParentLeft="true"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/condition" android:layout_below="@+id/location" android:layout_toRightOf="@+id/textView"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Description: "
+            android:id="@+id/textView2" android:layout_below="@+id/textView" android:layout_alignParentLeft="true"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text=" "
+            android:id="@+id/description" android:layout_alignTop="@+id/textView2"
+            android:layout_toRightOf="@+id/textView2"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Temperature "
+            android:id="@+id/textView3" android:layout_below="@+id/textView2" android:layout_alignParentLeft="true"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/temperature" android:layout_alignTop="@+id/textView3"
+            android:layout_toRightOf="@+id/description"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Pressure "
+            android:id="@+id/textView4" android:layout_below="@+id/textView3" android:layout_alignParentLeft="true"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/pressure" android:layout_below="@+id/textView3"
+            android:layout_toRightOf="@+id/textView4"/>
+    <SearchView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/searchView" android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"
+            android:layout_marginBottom="37dp" android:layout_alignParentRight="true"/>
+</RelativeLayout>
