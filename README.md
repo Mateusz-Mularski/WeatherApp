@@ -1,5 +1,5 @@
 ##WeatherApp
-Simple weather application which shows current weather for chosen cities or GPS position (14days forecast).
+Simple weather application which shows 14 days weather forecast for chosen cities or GPS position.
 
 ##Screenshots
 <p>
