@@ -1,5 +1,5 @@
 ##WeatherApp
-Simple weather application which shows 14 days weather forecast for chosen cities or GPS position.<br />
+Simple weather application which shows current weather or 14 days forecast for chosen cities or GPS position.<br />
 Writed and tested on Android 4.3
 
 ##Screenshots
