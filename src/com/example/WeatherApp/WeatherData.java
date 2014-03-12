@@ -8,16 +8,47 @@ public class WeatherData {
     private String condition;
     private String description;
     private float temperature;
+    private float nightTemp;
     private float windSpeed;
     private float windDeg;
-    private float rainAmmount;
-    private float snowAmmount;
+    private float rainAmmount=0f;
+    private float snowAmmount=0f;
     private int cloudsPerc;
     private float pressure;
     private float humidity;
     private int sunrise;
     private int sunset;
     private int image;
+    private int nightImage;
+    private int id;
+    private long curTime;
+    private int daysFromNow;
+    private float tempMin;
+    private float tempMax;
+
+    public float getTempMin() {
+        return tempMin;
+    }
+
+    public void setTempMin(float tempMin) {
+        this.tempMin = tempMin;
+    }
+
+    public float getTempMax() {
+        return tempMax;
+    }
+
+    public void setTempMax(float tempMax) {
+        this.tempMax = tempMax;
+    }
+
+    public void setNightTemp(Float temp) {
+        this.nightTemp = temp;
+    }
+
+    public float getNightTemp() {
+        return this.nightTemp;
+    }
 
     public int getId() {
         return id;
@@ -27,47 +58,56 @@ public class WeatherData {
         this.id = id;
     }
 
-    private int id;
-
-    private long curTime;
-
-    private int daysFromNow;
 
 
-    public int getImage(){
+    public int getImage() {
         return image;
     }
 
-    public void setImageById(int id){
-        if(id>=200&&id<300)
-            image=R.drawable.thunderstorm;
-        else if(id>=300&&id<400)
-            image=R.drawable.drizzle;
-        else if(id>=500&&id<600){
-            switch(id){
+    public int getNightImage(){
+        return nightImage;
+    }
+
+    public void setImageById(int id) {
+        if (id >= 200 && id < 300) {
+            image = R.drawable.thunderstorm;
+            nightImage=R.drawable.nightthunderstorm;
+        } else if (id >= 300 && id < 400) {
+            image = R.drawable.drizzle;
+            nightImage=R.drawable.nightdrizzle;
+        } else if (id >= 500 && id < 600) {
+            switch (id) {
                 case 500:
-                    image=R.drawable.drizzle;
+                    image = R.drawable.drizzle;
+                    nightImage=R.drawable.nightdrizzle;
                     break;
                 default:
-                    image=R.drawable.rain;
+                    image = R.drawable.rain;
+                    nightImage=R.drawable.nightrain;
             }
+        } else if (id >= 600 && id < 700){
+            image = R.drawable.snow;
+            nightImage=R.drawable.nightsnow;
         }
-        else if(id>=600&&id<700)
-            image=R.drawable.snow;
-        else if(id>=700&&id<800)
-            image=R.drawable.mist;
-        else if(id>=800&&id<900)
-            switch (id){
+        else if (id >= 700 && id < 800){
+            image = R.drawable.mist;
+            nightImage=R.drawable.nightmist;
+        }
+        else if (id >= 800 && id < 900)
+            switch (id) {
                 case 800:
-                    image=R.drawable.clear;
+                    image = R.drawable.clear;
+                    nightImage=R.drawable.nightclear;
                     break;
                 case 801:
-                    image=R.drawable.fewclouds;
+                    image = R.drawable.fewclouds;
+                    nightImage=R.drawable.nightfewclouds;
                     break;
                 case 802:
                 case 803:
                 case 804:
-                    image=R.drawable.overcast;
+                    image = R.drawable.overcast;
+                    nightImage=R.drawable.nightovercast;
             }
     }
 
@@ -80,28 +120,28 @@ public class WeatherData {
         this.curTime = curTime;
     }
 
-    public int getSunrise(){
+    public int getSunrise() {
         return sunrise;
     }
 
-    public void setSunrise(int sunrise){
-        this.sunrise=sunrise;
+    public void setSunrise(int sunrise) {
+        this.sunrise = sunrise;
     }
 
-    public int getSunset(){
+    public int getSunset() {
         return sunset;
     }
 
-    public void setSunset(int sunset){
-        this.sunset=sunset;
+    public void setSunset(int sunset) {
+        this.sunset = sunset;
     }
 
-    public int getDaysFromNow(){
+    public int getDaysFromNow() {
         return daysFromNow;
     }
 
-    public void setDaysFromNow(int daysFromNow){
-        this.daysFromNow=daysFromNow;
+    public void setDaysFromNow(int daysFromNow) {
+        this.daysFromNow = daysFromNow;
     }
 
     public String getLocation() {
@@ -152,14 +192,14 @@ public class WeatherData {
         this.windDeg = windDeg;
     }
 
-    public String getWindDirection(){
+    public String getWindDirection() {
         if (windDeg >= 0 && windDeg <= 11.25) {
             return "N";
         } else if (windDeg > 11.25 && windDeg <= 33.75) {
             return "NNE";
         } else if (windDeg > 33.75 && windDeg <= 56.25) {
             return "NE";
-        } else if (windDeg > 56.25 && windDeg <= 78.75){
+        } else if (windDeg > 56.25 && windDeg <= 78.75) {
             return "ENE";
         } else if (windDeg > 78.75 && windDeg <= 101.25) {
             return "E";
@@ -185,7 +225,7 @@ public class WeatherData {
             return "NW";
         } else if (windDeg > 326.25 && windDeg <= 348.75) {
             return "NNW";
-        } else if(windDeg>348.75){
+        } else if (windDeg > 348.75) {
             return "N";
         }
         return null;

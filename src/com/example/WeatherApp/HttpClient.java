@@ -16,10 +16,13 @@ public class HttpClient {
     public enum Options {
         FIND_BY_NAME,
         FORECAST_BY_ID,
-        FORECAST_BY_GPSLOCATION
+        FORECAST_BY_GPSLOCATION,
+        CURRENT_BY_ID,
+        CURRENT_BY_GPSLOCATION
     }
 
     private static String FIND_URL = "http://api.openweathermap.org/data/2.5/find?q=";
+    private static String CURR_URL = "http://api.openweathermap.org/data/2.5/weather?";
     private static String FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?";
 
     public static String getWeatherJSON(String[] location, Options op){
@@ -30,13 +33,19 @@ public class HttpClient {
 
         switch (op){
             case FIND_BY_NAME:
-                properUrl=FIND_URL + location[0] + "&units=metric&mode=json";
+                properUrl=FIND_URL + location[0] + "&type=like&units=metric&mode=json";
                 break;
             case FORECAST_BY_GPSLOCATION:
                 properUrl=FORECAST_URL + "lat=" + location[0] + "&lon=" + location[1] + "&units=metric&mode=json&cnt=14";
                 break;
             case FORECAST_BY_ID:
                 properUrl=FORECAST_URL + "id=" + location[0] + "&units=metric&mode=json&cnt=14";
+                break;
+            case CURRENT_BY_ID:
+                properUrl=CURR_URL+"id="+location[0]+"&units=metric&mode=json";
+                break;
+            case CURRENT_BY_GPSLOCATION:
+                properUrl=CURR_URL+"lat="+location[0]+"&lon="+location[1]+"&units=metric&mode=json";
                 break;
             default:
                 return null;

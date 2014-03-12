@@ -31,9 +31,7 @@ public class SearchListener implements SearchView.OnQueryTextListener {
                 Future<WeatherData[]> result = executor.submit(weatherFinder);
 
                 weatherList.clear();
-                for(WeatherData tmp : result.get())
-                    weatherList.add(tmp);
-                weatherList.notifyAllObservers();
+                weatherList.addMany(result.get());
         }
         catch (Exception e){
             e.printStackTrace();

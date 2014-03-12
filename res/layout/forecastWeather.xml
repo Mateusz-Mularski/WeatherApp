@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Large Text"
+            android:id="@+id/location" android:layout_alignParentTop="true" android:layout_centerHorizontal="true"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Medium Text"
+            android:id="@+id/date" android:layout_below="@+id/location" android:layout_centerHorizontal="true"/>
+    <ImageView
+            android:layout_width="320px"
+            android:layout_height="320px"
+            android:id="@+id/imageView"
+            android:layout_marginTop="48dp" android:layout_below="@+id/date" android:layout_alignParentLeft="true"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="LargeText"
+            android:id="@+id/tempNight"
+            android:layout_marginTop="32dp"
+            android:layout_below="@+id/descNight" android:layout_alignParentRight="true"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Medium Text"
+            android:id="@+id/mainDescDay"
+            android:layout_above="@+id/descriptionDay" android:layout_alignParentLeft="true"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Medium Text"
+            android:id="@+id/descriptionDay"
+            android:layout_below="@+id/imageView" android:layout_alignParentLeft="true"/>
+    <ImageView
+            android:layout_width="320px"
+            android:layout_height="320px"
+            android:id="@+id/imageView2" android:layout_alignTop="@+id/imageView"
+            android:layout_alignParentRight="true"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Medium Text"
+            android:id="@+id/mainDescNight"
+            android:layout_alignBottom="@+id/imageView2" android:layout_alignRight="@+id/imageView2"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Medium Text"
+            android:id="@+id/descNight" android:layout_below="@+id/imageView2" android:layout_alignParentRight="true"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Large Text"
+            android:id="@+id/tempDay" android:layout_alignTop="@+id/tempNight"
+            android:layout_alignParentLeft="true"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="winddir"
+            android:id="@+id/windDir"
+            android:layout_below="@+id/tempDay" android:layout_alignParentLeft="true" android:layout_marginTop="65dp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="windspeed"
+            android:id="@+id/windSpeed" android:layout_below="@+id/windDir" android:layout_alignParentLeft="true"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="clouds"
+            android:id="@+id/clouds" android:layout_below="@+id/windSpeed" android:layout_alignParentLeft="true"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="rain"
+            android:id="@+id/rain" android:layout_above="@+id/windSpeed" android:layout_alignParentRight="true"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="snow"
+            android:id="@+id/snow" android:layout_above="@+id/clouds" android:layout_alignRight="@+id/imageView2"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="pressure"
+            android:id="@+id/pressure" android:layout_below="@+id/snow" android:layout_alignRight="@+id/snow"/>
+</RelativeLayout>

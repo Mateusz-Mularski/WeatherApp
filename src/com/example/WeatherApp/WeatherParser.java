@@ -13,21 +13,21 @@ public class WeatherParser {
     //ViewPager
     public static WeatherData[] findCities(String data) throws JSONException {
 
-        if(data==null){
+        if (data == null) {
             return new WeatherData[]{new WeatherData()};
         }
         Log.d("weatherdatastring", data);
 
 
-        JSONObject jObj1 =new JSONObject(data);
-        JSONArray main =jObj1.getJSONArray("list");
-        int arraySize=main.length();
+        JSONObject jObj1 = new JSONObject(data);
+        JSONArray main = jObj1.getJSONArray("list");
+        int arraySize = main.length();
 
-        WeatherData[] weather=new WeatherData[arraySize];
-        for(int i=0; i<arraySize; i++)
-            weather[i]=new WeatherData();
+        WeatherData[] weather = new WeatherData[arraySize];
+        for (int i = 0; i < arraySize; i++)
+            weather[i] = new WeatherData();
 
-        for(int i=0; i<arraySize; i++){
+        for (int i = 0; i < arraySize; i++) {
             JSONObject jObj = main.getJSONObject(i);
 
 
@@ -35,7 +35,7 @@ public class WeatherParser {
 
             JSONObject sysObj = jObj.getJSONObject("sys");
             weather[i].setId(jObj.getInt("id"));
-            weather[i].setLocation(jObj.getString("name")+","+sysObj.getString("country"));
+            weather[i].setLocation(jObj.getString("name") + "," + sysObj.getString("country"));
 
             //weather.setSunrise(sysObj.getInt("sunrise"));
             //weather.setSunset(sysObj.getInt("sunset"));
@@ -72,24 +72,24 @@ public class WeatherParser {
     }
 
     public static WeatherData[] getDailyForecast(String data) throws JSONException {
-        if(data==null){
+        if (data == null) {
             return new WeatherData[]{new WeatherData()};
         }
         Log.d("weatherdatastring", data);
 
 
-        JSONObject jObj1 =new JSONObject(data);
-        JSONArray main =jObj1.getJSONArray("list");
-        int arraySize=main.length();
+        JSONObject jObj1 = new JSONObject(data);
+        JSONArray main = jObj1.getJSONArray("list");
+        int arraySize = main.length();
 
-        WeatherData[] weather=new WeatherData[arraySize];
-        for(int i=0; i<arraySize; i++){
-            weather[i]=new WeatherData();
-            weather[i].setLocation(jObj1.getJSONObject("city").getString("name")+","+
-                                    jObj1.getJSONObject("city").getString("country"));
+        WeatherData[] weather = new WeatherData[arraySize];
+        for (int i = 0; i < arraySize; i++) {
+            weather[i] = new WeatherData();
+            weather[i].setLocation(jObj1.getJSONObject("city").getString("name") + "," +
+                    jObj1.getJSONObject("city").getString("country"));
         }
 
-        for(int i=0; i<arraySize; i++){
+        for (int i = 0; i < arraySize; i++) {
             JSONObject jObj = main.getJSONObject(i);
 
             weather[i].setDaysFromNow(i);
@@ -97,7 +97,8 @@ public class WeatherParser {
 
             // We get weather info (This is an array)
             JSONObject temp = jObj.getJSONObject("temp");
-            weather[i].setTemperature((float)temp.getDouble("day"));
+            weather[i].setTemperature((float) temp.getDouble("max"));
+            weather[i].setNightTemp((float) temp.getDouble("night"));
 
             // We use only the first value
             JSONArray jArr = jObj.getJSONArray("weather");
@@ -109,18 +110,83 @@ public class WeatherParser {
 
             weather[i].setHumidity(jObj.getInt("humidity"));
             weather[i].setPressure(jObj.getInt("pressure"));
-            weather[i].setWindSpeed((float)jObj.getDouble("speed"));
-            weather[i].setWindDeg((float)jObj.getDouble("deg"));
+            weather[i].setWindSpeed((float) jObj.getDouble("speed"));
+            weather[i].setWindDeg((float) jObj.getDouble("deg"));
             weather[i].setCloudsPerc(jObj.getInt("clouds"));
-            if(!jObj.isNull("rain"))
-                weather[i].setRainAmmount((float)jObj.getDouble("rain"));
-            if(!jObj.isNull("snow"))
-                weather[i].setSnowAmmount((float)jObj.getDouble("snow"));
+            if (!jObj.isNull("rain"))
+                weather[i].setRainAmmount((float) jObj.getDouble("rain"));
+            if (!jObj.isNull("snow"))
+                weather[i].setSnowAmmount((float) jObj.getDouble("snow"));
 
             weather[i].setCurTime(jObj.getLong("dt"));
 
             Log.d("PARSER", "przeszlo");
         }
+
+        return weather;
+    }
+
+    public static WeatherData getCurrentWeather(String data) throws JSONException {
+        WeatherData weather = new WeatherData();
+        if (data == null) {
+            return weather;
+        }
+        Log.d("weatherdatastring", data);
+
+
+        JSONObject jObj = new JSONObject(data);
+
+
+        JSONObject sysObj = jObj.getJSONObject("sys");
+        weather.setLocation(jObj.getString("name") + "," +
+                sysObj.getString("country"));
+
+
+        weather.setDaysFromNow(0);
+        // We start extracting the info
+
+
+        // We start extracting the info
+        weather.setSunrise(sysObj.getInt("sunrise"));
+        weather.setSunset(sysObj.getInt("sunset"));
+
+        // We get weather info (This is an array)
+        JSONArray jArr = jObj.getJSONArray("weather");
+
+        // We use only the first value
+        JSONObject moreInfo = jArr.getJSONObject(0);
+        weather.setImageById(moreInfo.getInt("id"));
+        weather.setCondition(moreInfo.getString("main"));
+        weather.setDescription(moreInfo.getString("description"));
+
+        JSONObject mainObj = jObj.getJSONObject("main");
+        weather.setHumidity(mainObj.getInt("humidity"));
+        weather.setPressure(mainObj.getInt("pressure"));
+        weather.setTemperature((float) mainObj.getDouble("temp"));
+        weather.setTempMin((float) mainObj.getDouble("temp_min"));
+        weather.setTempMax((float) mainObj.getDouble("temp_max"));
+
+
+        weather.setCurTime(jObj.getLong("dt"));
+
+        // Wind
+        JSONObject wObj = jObj.getJSONObject("wind");
+        weather.setWindSpeed((float) wObj.getDouble("speed"));
+        weather.setWindDeg((float) wObj.getDouble("deg"));
+
+        if (!jObj.isNull("rain")) {
+            JSONObject rObj = jObj.getJSONObject("rain");
+            weather.setRainAmmount((float) rObj.getDouble("3h"));
+        }
+
+        if (!jObj.isNull("snow")) {
+            JSONObject sObj = jObj.getJSONObject("snow");
+            weather.setSnowAmmount((float) sObj.getDouble("3h"));
+        }
+
+        // Clouds
+        weather.setCloudsPerc(jObj.getJSONObject("clouds").getInt("all"));
+        Log.d("PARSER", "przeszlo");
 
         return weather;
     }

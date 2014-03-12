@@ -1,12 +1,16 @@
 package com.example.WeatherApp;
 
 import android.app.Activity;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
@@ -28,40 +32,73 @@ public class MainActivity extends Activity implements Observer {
         setContentView(R.layout.main);
         weatherList.addObserver(this);
 
-        SearchView sv = (SearchView) findViewById(R.id.searchView);
-        int id = sv.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
-        TextView textView = (TextView) sv.findViewById(id);
-        textView.setTextColor(Color.WHITE);
-        sv.setOnQueryTextListener(new SearchListener(weatherList));
-
-        Button searchByGpsButton = (Button) findViewById(R.id.button);
-        searchByGpsButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                if(location!=null){
-                    Intent newIntent = new Intent(MainActivity.this, ViewPagerActivity.class);
-                    newIntent.putExtra("loc", new String[]{""+location.getLatitude(), ""+location.getLongitude()});
-                    startActivity(newIntent);f
-                }
-                else
-                    Toast.makeText(getBaseContext(), "GPS is disabled", 1000).show();
-            }
-        });
-
         ListView lv = (ListView) findViewById(R.id.listView);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String id = weatherList.get(i).getId()+"";
 
-                Intent newIntent = new Intent(MainActivity.this, ViewPagerActivity.class);
+                Intent newIntent = new Intent(MainActivity.this, WeatherFoundActivity.class);
                 newIntent.putExtra("loc", new String[]{id});
                 startActivity(newIntent);
             }
         });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.activity_main_actions, menu);
+
+        SearchManager searchManager= (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView sv = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        sv.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        sv.setOnQueryTextListener(new SearchListener(weatherList));
+
+        MenuItem location = menu.findItem(R.id.action_location_found);
+        location.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                Intent intent = new Intent("android.location.GPS_ENABLED_CHANGE");
+                intent.putExtra("enabled", true);
+                sendBroadcast(intent);
+                LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                Criteria criteria = new Criteria();
+                String provider=locationManager.getBestProvider(criteria, false);
+                Location location = locationManager.getLastKnownLocation(provider);
+                String longitude, latitude;
+                if(location!=null){
+                    longitude=location.getLongitude()+"";
+                    latitude=location.getLatitude()+"";
+                    Intent newIntent = new Intent(MainActivity.this, WeatherFoundActivity.class);
+                    newIntent.putExtra("loc", new String[]{latitude, longitude});
+                    startActivity(newIntent);
+                }
+                else
+                    Toast.makeText(getBaseContext(), "GPS is disabled", 1000).show();
+                return true;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public void onDestroy(){
+        Intent intent = new Intent("android.location.GPS_ENABLED_CHANGE");
+        intent.putExtra("enabled", false);
+        sendBroadcast(intent);
+        super.onDestroy();
+    }
+
+    @Override
+    public void onPause(){
+        Intent intent = new Intent("android.location.GPS_ENABLED_CHANGE");
+        intent.putExtra("enabled", false);
+        sendBroadcast(intent);
+        super.onPause();
+    }
+
 
     public ObservableWeatherList getWeatherList(){
         return weatherList;

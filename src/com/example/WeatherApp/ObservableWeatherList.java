@@ -13,6 +13,17 @@ public class ObservableWeatherList extends LinkedList<WeatherData> {
         this.observers = new LinkedList<Observer>();
     }
 
+    public void addData(WeatherData data){
+        super.add(data);
+        notifyAllObservers();
+    }
+
+    public void addMany(WeatherData[] data){
+        for(WeatherData tmp : data)
+            super.add(tmp);
+        notifyAllObservers();
+    }
+
     public void addObserver(Observer obs){
         observers.add(obs);
     }

@@ -38,7 +38,7 @@ public class WeatherArrayAdapter extends ArrayAdapter<WeatherData> {
         TextView timeTemp = (TextView) convertView.findViewById(R.id.labelSmall);
         location.setText(values.get(position).getLocation());
         timeTemp.setText(new SimpleDateFormat("dd.MM.yyyy HH:mm").format(values.get(position).getCurTime()*1000L)+
-                            ", "+values.get(position).getTemperature()+"'C");
+                            ", "+values.get(position).getTemperature()+"\u00B0"+"C");
         ImageView image = (ImageView) convertView.findViewById(R.id.icon);
         image.setImageResource(values.get(position).getImage());
 
