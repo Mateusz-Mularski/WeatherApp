@@ -1,7 +1,7 @@
 ##WeatherApp
 My first app in android.<br />
 Simple weather application which shows current weather or 14 days forecast for chosen cities or GPS position.<br />
-Writed and tested on Android 4.3
+Written and tested on Android 4.3
 
 ##Screenshots
 <p>
